@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>倒计时</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.blackboard {
+				box-sizing: border-box;
+				width: 600px;
+				margin: 0 auto; 
+				background-color: rgb(36,66,66);
+				border: 10px solid rgb(211,131,16);
+				color: #FFF;
+				text-align: center;
+			}
+			.container {
+				padding: 20px 80px;
+				margin: 0 auto;
+			}
+			.title {
+				font-size: 20px;
+				margin: 0 0 10px;
+			}
+			.message {
+				font-size: 14px;
+				line-height: 1.5rem;
+			}
+			.message span {
+				color: #EEF903;
+			}
+			.day,
+			.hour,
+			.minuts,
+			.second {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+				background-color: black;
+				color: white;
+				font-size: 20px;
+			}
+			.time {
+				margin: 10px 0 0 0;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="countDownBox">
+			<div class="blackboard">
+				<div class="container">
+					<p class="title">2023年考研倒计时</p>
+					<p class="message">
+						2023全国硕士研究生初试时间:
+						<span>2022年12月24日至25日</span>
+						<br>
+						(考试时间超过3小时的考试科目,安排在12月26日)
+						<br>
+						目前距离2023年考研倒计时还有
+					</p>
+					<div class="time"> 
+						<span class="day">1</span>
+						<span class="word">天</span>
+						<span class="hour">2</span>
+						<span class="word">时</span>
+						<span class="minuts">3</span>
+						<span class="word">分</span>
+						<span class="second">4</span>
+						<span class="word">秒</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+		
+		    // 1.获取元素
+			var day = document.querySelector('.day');   //天数的盒子
+			var hour = document.querySelector('.hour');   //小时的盒子
+			var minuts = document.querySelector('.minuts');  //分钟的盒子
+			var second = document.querySelector('.second'); //秒数的盒子
+			var message = document.querySelector('.time');
+			var inputTime = +new Date('2022-12-24 00:00:00');   //定义结束的时间
+			countDown(); // 因为定时器第一次执行也是要等间隔秒数，防止刷新页面空白，所以提前调用一次函数
+			var timer = null;  //全局变量，null是一个空对象
+			// 2. 开启定时器
+			timer = setInterval(countDown,1000);  //每隔一秒调用一次
+			
+			function countDown(time){
+				
+				var nowTime = +new Date();   //获取当前时间的时间戳，即返回当前时间至1970年这一时间段
+				var times = (inputTime - nowTime)/1000; // times是剩余时间秒数
+				var d = parseInt(times / 60 / 60 / 24);  //天数
+				d = d < 10 ? '0' + d : d; // 小于10则在数字前面添加一个0补齐两位数
+				day.innerHTML = d;    //把剩余的天数给 天数 小盒子
+				var h = parseInt(times / 60 / 60 % 24 );  //小时
+				h = h < 10 ? '0' + h : h; // 小于10则在数字前面添加一个0补齐两位数
+				hour.innerHTML = h;    
+				var m = parseInt(times / 60 % 60);   // 分
+				m = m < 10 ? '0' + m : m; // 小于10则在数字前面添加一个0补齐两位数
+				minuts.innerHTML = m;
+				var s = parseInt(times % 60 );     //秒
+				s = s < 10 ? '0' + s : s; // 小于10则在数字前面添加一个0补齐两位数
+				second.innerHTML = s;
+				//时间到停止定时器
+				if(d <= '00' && h <= '00' && m <= '00' && s <= '00' ){
+					clearInterval(timer);
+					message.innerHTML = '跨越困难,勇敢向前冲,胜利属于勇敢者';
+					message.style.color = 'deepskyblue';
+				}
+			}
+		</script>
+	</body>
+</html>
